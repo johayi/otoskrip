@@ -2,11 +2,11 @@
 dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 ###########- COLOR CODE -##############
-colornow=$(cat /etc/ssnvpn/theme/color.conf)
+colornow=$(cat /etc/cobain/theme/color.conf)
 NC="\e[0m"
 RED="\033[0;31m" 
-COLOR1="$(cat /etc/ssnvpn/theme/$colornow | grep -w "TEXT" | cut -d: -f2|sed 's/ //g')"
-COLBG1="$(cat /etc/ssnvpn/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g')"                    
+COLOR1="$(cat /etc/cobain/theme/$colornow | grep -w "TEXT" | cut -d: -f2|sed 's/ //g')"
+COLBG1="$(cat /etc/cobain/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g')"                    
 ###########- END COLOR CODE -##########
 
 red='\e[1;31m'
@@ -27,9 +27,6 @@ fi
 
 IP=$(curl -sS ipv4.icanhazip.com);
 date=$(date +"%Y-%m-%d")
-
-MYIP=$(curl -sS ipv4.icanhazip.com)
-NameUser=$(curl -sS https://raw.githubusercontent.com/johayi/allow/main/izin | grep $MYIP | awk '{print $2}')
 
 
 clear
@@ -54,7 +51,7 @@ cp /etc/shadow /root/backup/ &> /dev/null
 cp /etc/gshadow /root/backup/ &> /dev/null
 cp /etc/ppp/chap-secrets /root/backup/chap-secrets &> /dev/null
 cp /etc/ipsec.d/passwd /root/backup/passwd1 &> /dev/null
-cp -r /var/lib/ssnvpn-pro/ /root/backup/ssnvpn-pro &> /dev/null
+cp -r /var/lib/cobain-pro/ /root/backup/cobain-pro &> /dev/null
 cp -r /etc/xray /root/backup/xray &> /dev/null
 cp -r /home/vps/public_html /root/backup/public_html &> /dev/null
 cp -r /etc/cron.d /root/backup/cron.d &> /dev/null
@@ -92,8 +89,11 @@ Save_And_Exit () {
     git add . &> /dev/null
     git commit -m backup &> /dev/null
     git branch -M main &> /dev/null
-    git remote add origin https://github.com/johayi/pakyu
-    git push -f https://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@github.com/johayi/pakyu.git &> /dev/null
+	git remote add origin https://github.com/johayi/pakyu
+    #git remote add origin https://github.com/khairunisya/backupuserssn
+	git push -f https://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@github.com/johayi/pakyu.git &> /dev/null
+    #git push -f https://$itoken@github.com/khairunisya/backupuserssn.git &> /dev/null
+
 }
 
 if [ ! -d "/root/user-backup/" ]; then
@@ -109,6 +109,7 @@ echo -e "$COLOR1│${NC}  [INFO] Processing updating server...... "
 Save_And_Exit
 fi
 link="https://raw.githubusercontent.com/johayi/pakyu/main/$NameUser/$NameUser.zip"
+#link="https://raw.githubusercontent.com/khairunisya/backupuserssn/main/$NameUser/$NameUser.zip"
 sleep 1
 echo -e "$COLOR1│${NC}  [INFO] Backup done "
 sleep 1

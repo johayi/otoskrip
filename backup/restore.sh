@@ -8,6 +8,29 @@ RED="\033[0;31m"
 COLOR1="$(cat /etc/cobain/theme/$colornow | grep -w "TEXT" | cut -d: -f2|sed 's/ //g')"
 COLBG1="$(cat /etc/cobain/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g')"                    
 ###########- END COLOR CODE -##########
+clear
+
+red='\e[1;31m'
+green='\e[0;32m'
+NC='\e[0m'
+green() { echo -e "\\033[32;1m${*}\\033[0m"; }
+red() { echo -e "\\033[31;1m${*}\\033[0m"; }
+PERMISSION
+
+if [ -f /home/needupdate ]; then
+red "Your script need to update first !"
+exit 0
+elif [ "$res" = "Permission Accepted..." ]; then
+echo -ne
+else
+red "Permission Denied!"
+exit 0
+fi
+
+cd
+MYIP=$(curl -sS ipv4.icanhazip.com)
+NameUser=$(curl -sS https://raw.githubusercontent.com/johayi/allow/main/izin | grep $MYIP | awk '{print $2}')
+cekdata=$(curl -sS https://raw.githubusercontent.com/johayi/allow/main/$NameUser/$NameUser.zip | grep 404 | awk '{print $1}' | cut -d: -f1)
 
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│${NC} ${COLBG1}             • RESTOR PANEL MENU • ${NC} $COLOR1│$NC"
@@ -17,7 +40,7 @@ echo -e "$COLOR1┌────────────────────�
 red "│  [INFO] Data not found / you never backup"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}" 
 echo -e "$COLOR1┌────────────────────── BY ───────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}              • COBAINTEAM •           $COLOR1│$NC"
+echo -e "$COLOR1│${NC}              • COBAINTEAM•           $COLOR1│$NC"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}" 
 echo ""
 read -n 1 -s -r -p "   Press any key to back on menu"
@@ -67,12 +90,12 @@ cp -r /root/backup/public_html /home/vps/ &> /dev/null
 cp -r /root/backup/crontab /etc/ &> /dev/null
 cp -r /root/backup/cron.d /etc/ &> /dev/null
 rm -rf /root/backup &> /dev/null
-echo -e "$COLOR1│${NC}  [ ${green}INFO${NC} ] • Done... Successfully - Script By SSH JRTUNNEL NETWORK."
+echo -e "$COLOR1│${NC}  [ ${green}INFO${NC} ] • Done... Successfully - Script By REUILD ANGGUN-VPN."
 sleep 1
 rm -f /root/backup/backup.zip &> /dev/null
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}" 
 echo -e "$COLOR1┌────────────────────── BY ───────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}              • COBAINTEAM •           $COLOR1│$NC"
+echo -e "$COLOR1│${NC}              • COBAINTEAM•           $COLOR1│$NC"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}" 
 echo ""
 read -n 1 -s -r -p "   Press any key to back on menu"
